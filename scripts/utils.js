@@ -2,6 +2,10 @@
 
 const is_dev = process.env.NODE_ENV == "development";
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HappyPack = require("happypack");
+const os = require("os");
+const HappyThreadPool = HappyPack.ThreadPool({size: os.cpus().length - 1}); 
+
 
 exports.resolveStyle = function(config) {
     let cssConf = importLoaders => ({
@@ -12,19 +16,20 @@ exports.resolveStyle = function(config) {
             importLoaders: importLoaders
         }
     });
-    let cssRule = {
-        test: /\.css$/,
-        use: [
+    let cssRule = new HappyPack({
+        id: "css",
+        loaders: [
             is_dev ? "vue-style-loader" : MiniCssExtractPlugin.loader,
             cssConf(1),
             "postcss-loader"
-        ]
-    }
+        ],
+        threadPool: HappyThreadPool
+    })
     let preRule;
     for(var ext in config) {
-        preRule = {
-            test: new RegExp("\\."+ext+"$"),
-            use: [
+        preRule = new HappyPack({
+            id: ext,
+            loaders: [
                 is_dev ? "vue-style-loader" : MiniCssExtractPlugin.loader,
                 cssConf(2),
                 "postcss-loader",
@@ -35,8 +40,9 @@ exports.resolveStyle = function(config) {
                         ...config[ext]
                     }
                 }
-            ]
-        }
+            ],
+            threadPool: HappyThreadPool
+        })
     }
     return [cssRule].concat((() => {
         return preRule ? preRule : []

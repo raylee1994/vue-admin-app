@@ -20,10 +20,6 @@ var output = {
     publicPath: is_dev ? config.dev.publicPath : config.prod.publicPath
 };
 
-var styleRules = resolveStyle({
-    less: {}
-});
-
 var module = {
     rules: [
         {
@@ -46,7 +42,14 @@ var module = {
                 esModules: false
             }
         },
-        ...styleRules
+        {
+            test: /\.css$/,
+            loader: "happypack/loader?id=css"
+        },
+        {
+            test: /\.less$/,
+            loader: "happypack/loader?id=less"
+        }
     ]
 };
 
@@ -67,10 +70,30 @@ var plugins = [
         loaders: ["vue-loader"],
         threadPool: HappyThreadPool
     }),
-    new HappyPack({
-        id: "vue",
-        loaders: ["vue-loader"],
-        threadPool: HappyThreadPool
+    ...resolveStyle({
+        less: {}
     })
 ]
 
+var resolve = {
+    alias: {
+        "@": path.resolve(__dirname, "../src"),
+        "views": path.resolve(__dirname, "../src/views"),
+        "components": path.resolve(__dirname, "../src/components"),
+        "common": path.resolve(__dirname, "../src/common"),
+        "router": path.resolve(__dirname, "../src/router"),
+        "views": path.resolve(__dirname, "../src/views")
+    },
+    extensions: [".vue", ".js", ".ts", ".tsx", ".less", ".css"]
+}
+
+var externals = {
+    "$": "jQuery",
+    "window.$": "jQuery",
+    "jquery": "jQuery",
+    "window.jquery": "jQuery"
+}
+
+var optimization = {
+    
+}
