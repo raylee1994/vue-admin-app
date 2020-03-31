@@ -88,12 +88,37 @@ var resolve = {
 }
 
 var externals = {
-    "$": "jQuery",
-    "window.$": "jQuery",
-    "jquery": "jQuery",
-    "window.jquery": "jQuery"
+    "$": "jquery",
+    "window.$": "jquery",
+    "jQuery": "jquery",
+    "window.jQuery": "jquery"
 }
 
 var optimization = {
-    
+    splitChunks: {
+        name: false,
+        chunks: "all",
+        cacheGroups: {
+            vendor: {
+                test: /[\\/]node_modules[\\/]/, // [\\/] 代表可以是\也可以是/
+                name: "vendor",
+                enforce: true,
+                priority: 100
+            }
+        }
+    },
+    runtimeChunk: {
+        name: "runtime"
+    }
+}
+
+module.exports = {
+    entry,
+    output,
+    module,
+    devtool,
+    plugins,
+    resolve,
+    externals,
+    optimization
 }
