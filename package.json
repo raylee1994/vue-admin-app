@@ -59,6 +59,7 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "element": "^0.1.4",
     "jquery": "^3.4.1",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
