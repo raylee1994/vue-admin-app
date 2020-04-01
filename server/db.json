@@ -1,0 +1,11 @@
+{
+   "user": [{
+      "id": 1,
+      "name": "lwf",
+      "pwd": 123456
+   }],
+   "goods": [],
+   "members": [],
+   "goods": [],
+   "orders": []
+}

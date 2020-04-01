@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "set NODE_ENV=development&& node app.js",
-    "dev": "set NODE_ENV=development&& node build/webpack.dev.config.js",
-    "build": "set NODE_ENV=production&& rimraf dist && node build/webpack.prod.config.js"
+    "start": "set NODE_ENV=development&& node server/app.js",
+    "dev": "set NODE_ENV=development&& node scripts/webpack.dev.config.js",
+    "build": "set NODE_ENV=production&& rimraf dist && node scripts/webpack.prod.config.js"
   },
   "author": "",
   "license": "ISC",
@@ -15,6 +15,7 @@
     "@babel/polyfill": "^7.8.7",
     "@babel/preset-env": "^7.9.0",
     "@babel/preset-typescript": "^7.9.0",
+    "apicache": "^1.5.3",
     "autoprefixer": "^9.7.4",
     "babel-loader": "^8.0.6",
     "body-parser": "^1.19.0",
@@ -30,7 +31,6 @@
     "happypack": "^5.0.1",
     "html-webpack-plugin": "^3.2.0",
     "is-wsl": "^2.1.1",
-    "json-server": "^0.16.1",
     "less": "^3.11.1",
     "less-loader": "^5.0.0",
     "mini-css-extract-plugin": "^0.9.0",

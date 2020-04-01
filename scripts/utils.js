@@ -19,10 +19,10 @@ exports.resolveStyle = function(config) {
     let cssRule = new HappyPack({
         id: "css",
         loaders: [
-            is_dev ? "vue-style-loader" : MiniCssExtractPlugin.loader,
+            is_dev && "vue-style-loader",
             cssConf(1),
             "postcss-loader"
-        ],
+        ].filter(Boolean),
         threadPool: HappyThreadPool
     })
     let preRule;
@@ -30,7 +30,7 @@ exports.resolveStyle = function(config) {
         preRule = new HappyPack({
             id: ext,
             loaders: [
-                is_dev ? "vue-style-loader" : MiniCssExtractPlugin.loader,
+                is_dev && "vue-style-loader",
                 cssConf(2),
                 "postcss-loader",
                 {
@@ -40,7 +40,7 @@ exports.resolveStyle = function(config) {
                         ...config[ext]
                     }
                 }
-            ],
+            ].filter(Boolean),
             threadPool: HappyThreadPool
         })
     }
