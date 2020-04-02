@@ -15,7 +15,7 @@ process.env.NODE_ENV = "development";
 process.env.HOST = "localhost";
 process.env.PORT = 8080;
 
-var webpackConf = require('../scripts/webpack.dev.config.js');
+var webpackConf = require('./scripts/webpack.dev.config.js');
 var webpackCompiller = webpack(webpackConf);
 
 var hotMiddleware = webpackHotMiddleware(webpackCompiller);
@@ -51,7 +51,7 @@ app.use(cache('2 minutes', ((req, res) => res.statusCode === 200)));
 
 app.active = ()=>{
     const watcher = chokidar.watch([
-        path.resolve(__dirname, '../src/index.html'),// index.html is on the root folder
+        path.resolve(__dirname, './src/index.html'),// index.html is on the root folder
     ]);
     watcher.on('ready', function() {
         console.log('Initial scan complete. Ready for changes');
@@ -64,11 +64,11 @@ app.active = ()=>{
 }
 
 app.active();
-app.set('views', path.join(__dirname, '../src'));
+app.set('views', path.join(__dirname, './src'));
 app.use(require('connect-history-api-fallback')());
 
 app.get("/*", function(req, res, next) {
-    res.sendFile(path.resolve(__dirname, '../src/index.html'));
+    res.sendFile(path.resolve(__dirname, './src/index.html'));
 });
 
 app.listen(8080, function(err) {
